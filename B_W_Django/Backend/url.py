@@ -7,6 +7,7 @@ urlpatterns=[
 
     path('detail',views.User_detail),
     path('user_details',views.User_Auth_detail),
+    path('test',views.test),
     
 
     #path('api/lead/', views.regCreate.as_view() ),

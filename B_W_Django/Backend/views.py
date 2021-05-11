@@ -53,7 +53,7 @@ def User_detail(request): #function based API
        # we’re first calling the is_valid() method on the serializer to ensure that the data received is conformed with our model.
         if serializer.is_valid(): # after deseralization checking if it valid format.
             serializer.save() # save python datatype into model instance into table.
-            return Response(status=status.HTTP_201_CREATED) #send responce
+            return Response(serializer.data) #send responce
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) # if data not valid return 404 page
 @api_view(['PUT', 'DELETE','GET']) # here specifiy which operation you want to perform in below API. IF YOU REMOVE any of PUT,Get <delete method 
@@ -80,7 +80,7 @@ def User_upadte(request, pk):
         serializer = regSerializer(data, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data,status=status.HTTP_204_NO_CONTENT)
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif request.method == 'DELETE': # if it delete request
@@ -100,9 +100,28 @@ def User_Auth_detail(request): #function based API
 
     elif request.method == 'POST':
         serializer = UserSerializer(data=request.data) # get json data from frontend in request.data and pass to serializer for convert into python datatype this process is called deseralization
+        #print(serializer.data)
        # we’re first calling the is_valid() method on the serializer to ensure that the data received is conformed with our model.
         if serializer.is_valid(): # after deseralization checking if it valid format.
+
             serializer.save()
-            return Response(serializer.data,status=status.HTTP_204_NO_CONTENT)
+            return Response(serializer.data)
             
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST) 
+
+
+
+# for testing purpose ignor it.
+@api_view(['GET', 'POST'])
+def test(request):
+    if(request.method=='GET'):
+        var=['puneet','singh','rajput','yes','no']
+        var1=['no1,no2,no3,no4']
+        var3=['yes1','yes2','yes3','yes4','yes5','yrd56']
+        data_dic={'variables':var,'heading':var1,'paragraphs':var3}
+        import json
+        app_json = json.dumps(data_dic)
+        return Response(app_json,status=status.HTTP_200_OK)
+
+
+

@@ -22,7 +22,9 @@ class regSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
-        fields=['id','username','password']
+        fields=(
+            'id','username','password','first_name','last_name','email',
+            )
         # this extra_kwargs use for what? - when user call api then password will show along with username . so we want when this API call password not show only username will show for this
         # we puted password is write only not for read and its required field.
         extra_kwargs ={'password':{
